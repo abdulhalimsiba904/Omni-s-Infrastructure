@@ -32,7 +32,7 @@ export function ProductImage({ image, productName, className = '' }: ProductImag
       <figure className={`product-visual ${className}`}>
         <img className="product-image-asset" src={image.src} alt={image.alt} loading="lazy" />
         <figcaption className="representative-image-note">
-          Pinterest reference — not verified as the supplied product.
+          Reference image — supplied product match and reuse rights are unverified.
         </figcaption>
       </figure>
     )

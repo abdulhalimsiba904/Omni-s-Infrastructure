@@ -19,12 +19,18 @@ export type CatalogueProduct = {
   specifications?: ProductSpecification[]
   includedItems?: string[]
   image: CatalogueImage
-  priceStatus: 'price-on-request'
+  price: CataloguePrice
   availabilityStatus: 'unconfirmed'
   publicationNote?: string
   pinterestReference?: { searchQuery: string; pinUrl: string; accessedAt: string }
   searchKeywords: string[]
 }
+
+export type CataloguePrice =
+  | { status: 'coming-soon' }
+  | { status: 'fixed'; amount: number }
+  | { status: 'range'; minimum: number; maximum: number }
+  | { status: 'variants'; options: { id: string; label: string; amount: number }[] }
 
 export type CatalogueImage =
   | { status: 'development-placeholder'; label: string }
@@ -68,6 +74,42 @@ export const catalogueCategories: CatalogueCategory[] = [
 ]
 
 const developmentImage = { status: 'development-placeholder' as const, label: 'Development image placeholder' }
+const productPrices: Record<string, CataloguePrice> = {
+  'small-high-temperature-melting-furnace': { status: 'variants', options: [
+    { id: '1kg', label: '1 kg', amount: 6800 },
+    { id: '2kg', label: '2 kg', amount: 7500 },
+    { id: '3kg', label: '3 kg', amount: 7999 },
+  ] },
+  'gold-melting-torch-kit': { status: 'coming-soon' },
+  'melting-tongs-crucible-pliers': { status: 'coming-soon' },
+  'forged-iron-blacksmith-tongs': { status: 'fixed', amount: 200 },
+  'graphite-carbon-crucibles-molds': { status: 'fixed', amount: 150 },
+  'borax-powder': { status: 'fixed', amount: 50 },
+  'aluminum-alloy-igniter-torch': { status: 'fixed', amount: 150 },
+  'solar-power-system-kit': { status: 'fixed', amount: 6999 },
+  'all-in-one-solar-power-system': { status: 'coming-soon' },
+  'portable-outdoor-solar-generator': { status: 'fixed', amount: 2500 },
+  'foldable-monocrystalline-solar-panels': { status: 'fixed', amount: 299 },
+  'pure-sine-wave-power-inverter': { status: 'coming-soon' },
+  'portable-electronic-gram-scale': { status: 'fixed', amount: 500 },
+  'high-precision-digital-scale': { status: 'fixed', amount: 299 },
+  'business-calculator-handwriting-pad': { status: 'fixed', amount: 250 },
+  'banknote-counter': { status: 'coming-soon' },
+  'baofeng-888s-walkie-talkies': { status: 'fixed', amount: 700 },
+  'rechargeable-led-headlamps': { status: 'fixed', amount: 199 },
+  'flashlights-searchlights': { status: 'fixed', amount: 200 },
+  'smart-one-piece-bidet-toilet': { status: 'fixed', amount: 1600 },
+  'standard-one-piece-flush-toilet': { status: 'fixed', amount: 499 },
+  'bathroom-shower-faucet-system': { status: 'fixed', amount: 500 },
+  'foldable-compact-sofa-beds': { status: 'range', minimum: 900, maximum: 2000 },
+  mattresses: { status: 'fixed', amount: 2300 },
+  'aurorafox-camping-tents': { status: 'fixed', amount: 2599 },
+  'outdoor-camping-shower-kit': { status: 'fixed', amount: 600 },
+  'portable-pressure-washer': { status: 'fixed', amount: 350 },
+  'portable-refrigeration-ac-welding-torch-kit': { status: 'fixed', amount: 799 },
+  'medical-oxygen-tank-gas-cylinder-kit': { status: 'coming-soon' },
+  'disposable-protective-hazmat-suit': { status: 'coming-soon' },
+}
 const product = (
   id: string,
   name: string,
@@ -79,7 +121,7 @@ const product = (
 ): CatalogueProduct => ({
   id, name, categoryId, categoryName, description, searchKeywords,
   image: developmentImage,
-  priceStatus: 'price-on-request',
+  price: productPrices[id],
   availabilityStatus: 'unconfirmed',
   ...extra,
 })

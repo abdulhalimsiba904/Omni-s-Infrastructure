@@ -6,18 +6,21 @@ const CART_STORAGE_KEY = 'omni-cart-v1'
 export type CartItem = {
   productId: string
   quantity: number
+  variantId?: string
 }
 
 type CartContextValue = {
   items: CartItem[]
   totalQuantity: number
-  addToCart: (productId: string) => void
-  setQuantity: (productId: string, quantity: number) => void
-  removeFromCart: (productId: string) => void
+  addToCart: (productId: string, variantId?: string) => boolean
+  setQuantity: (productId: string, quantity: number, variantId?: string) => void
+  setVariant: (productId: string, variantId: string) => void
+  removeFromCart: (productId: string, variantId?: string) => void
 }
 
 const CartContext = createContext<CartContextValue | null>(null)
 const knownProductIds = new Set(catalogueProducts.map((product) => product.id))
+const itemKey = (productId: string, variantId?: string) => `${productId}::${variantId ?? ''}`
 
 function readCart(): CartItem[] {
   try {
@@ -27,7 +30,7 @@ function readCart(): CartItem[] {
     const parsed: unknown = JSON.parse(stored)
     if (!Array.isArray(parsed)) return []
 
-    const quantities = new Map<string, number>()
+    const quantities = new Map<string, CartItem>()
     for (const entry of parsed) {
       if (
         typeof entry === 'object' && entry !== null &&
@@ -35,11 +38,21 @@ function readCart(): CartItem[] {
         'quantity' in entry && Number.isSafeInteger(entry.quantity) && entry.quantity > 0 &&
         knownProductIds.has(entry.productId)
       ) {
-        quantities.set(entry.productId, (quantities.get(entry.productId) ?? 0) + entry.quantity)
+        const product = catalogueProducts.find(({ id }) => id === entry.productId)!
+        const variantId = 'variantId' in entry && typeof entry.variantId === 'string' ? entry.variantId : undefined
+        const validVariant = product.price.status !== 'variants' || product.price.options.some((option) => option.id === variantId)
+        const retainedVariantId = validVariant ? variantId : undefined
+        const key = itemKey(entry.productId, retainedVariantId)
+        const existing = quantities.get(key)
+        quantities.set(key, {
+          productId: entry.productId,
+          quantity: (existing?.quantity ?? 0) + entry.quantity,
+          ...(retainedVariantId ? { variantId: retainedVariantId } : {}),
+        })
       }
     }
 
-    return Array.from(quantities, ([productId, quantity]) => ({ productId, quantity }))
+    return Array.from(quantities.values())
   } catch {
     return []
   }
@@ -57,25 +70,34 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, [items])
 
   const value = useMemo<CartContextValue>(() => {
-    const addToCart = (productId: string) => {
-      if (!knownProductIds.has(productId)) return
+    const addToCart = (productId: string, variantId?: string) => {
+      const product = catalogueProducts.find((entry) => entry.id === productId)
+      if (!product) return false
+      if (product.price.status === 'variants' && !product.price.options.some((option) => option.id === variantId)) return false
       setItems((current) => {
-        const existing = current.find((item) => item.productId === productId)
+        const existing = current.find((item) => itemKey(item.productId, item.variantId) === itemKey(productId, variantId))
         return existing
-          ? current.map((item) => item.productId === productId ? { ...item, quantity: item.quantity + 1 } : item)
-          : [...current, { productId, quantity: 1 }]
+          ? current.map((item) => itemKey(item.productId, item.variantId) === itemKey(productId, variantId) ? { ...item, quantity: item.quantity + 1 } : item)
+          : [...current, { productId, quantity: 1, ...(variantId ? { variantId } : {}) }]
       })
+      return true
     }
 
-    const setQuantity = (productId: string, quantity: number) => {
+    const setQuantity = (productId: string, quantity: number, variantId?: string) => {
       if (!Number.isSafeInteger(quantity)) return
-      setItems((current) => current.map((item) => item.productId === productId
+      setItems((current) => current.map((item) => itemKey(item.productId, item.variantId) === itemKey(productId, variantId)
         ? { ...item, quantity: Math.max(1, quantity) }
         : item))
     }
 
-    const removeFromCart = (productId: string) => {
-      setItems((current) => current.filter((item) => item.productId !== productId))
+    const setVariant = (productId: string, variantId: string) => {
+      setItems((current) => current.map((item) => item.productId === productId && !item.variantId
+        ? { ...item, variantId }
+        : item))
+    }
+
+    const removeFromCart = (productId: string, variantId?: string) => {
+      setItems((current) => current.filter((item) => itemKey(item.productId, item.variantId) !== itemKey(productId, variantId)))
     }
 
     return {
@@ -83,6 +105,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       totalQuantity: items.reduce((total, item) => total + item.quantity, 0),
       addToCart,
       setQuantity,
+      setVariant,
       removeFromCart,
     }
   }, [items])

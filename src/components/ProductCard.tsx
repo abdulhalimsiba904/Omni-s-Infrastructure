@@ -2,6 +2,7 @@ import type { CatalogueProduct } from '../data/catalogue'
 import { Link } from 'react-router-dom'
 import { ProductImage } from './ProductImage'
 import { AddToCartButton } from './AddToCartButton'
+import { ProductPrice } from './ProductPrice'
 
 type ProductCardProps = {
   product: CatalogueProduct
@@ -34,7 +35,7 @@ export function ProductCard({ product }: ProductCardProps) {
         )}
         {product.publicationNote && <p className="publication-note">{product.publicationNote}</p>}
         <div className="product-statuses" aria-label="Price and availability">
-          <p><strong>Price:</strong> Price on Request</p>
+          <p><strong>Price:</strong> <ProductPrice price={product.price} /></p>
           <p><strong>Availability:</strong> Unconfirmed</p>
         </div>
         <Link className="button button-secondary product-details-link" to={`/products/${product.id}`}>

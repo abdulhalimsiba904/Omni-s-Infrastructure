@@ -2,7 +2,14 @@ import { useState, type FormEvent } from 'react'
 import { createOrderRequestWhatsAppUrl } from '../config/whatsapp'
 
 type OrderRequestFormProps = {
-  items: { productName: string; quantity: number }[]
+  items: {
+    productName: string
+    quantity: number
+    variantLabel?: string
+    unitPriceLabel: string
+    totalMinimum?: number
+    totalMaximum?: number
+  }[]
 }
 
 export function OrderRequestForm({ items }: OrderRequestFormProps) {

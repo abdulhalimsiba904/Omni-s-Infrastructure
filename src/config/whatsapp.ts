@@ -16,7 +16,14 @@ export function createProductAvailabilityWhatsAppUrl(productName: string) {
 }
 
 type OrderRequestDetails = {
-  items: { productName: string; quantity: number }[]
+  items: {
+    productName: string
+    quantity: number
+    variantLabel?: string
+    unitPriceLabel: string
+    totalMinimum?: number
+    totalMaximum?: number
+  }[]
   customerName: string
   phoneNumber: string
   location: string
@@ -25,8 +32,17 @@ type OrderRequestDetails = {
 
 export function createOrderRequestWhatsAppUrl(details: OrderRequestDetails) {
   const productLines = details.items
-    .map(({ productName, quantity }) => `- ${productName} × ${quantity} — Price: Price on Request`)
+    .map(({ productName, quantity, variantLabel, unitPriceLabel }) => `- ${productName}${variantLabel ? ` (${variantLabel})` : ''} × ${quantity} — Unit price: ${unitPriceLabel}`)
     .join('\n')
+  const pricedLines = details.items.filter(({ totalMinimum }) => totalMinimum !== undefined)
+  const totalMinimum = pricedLines.reduce((sum, item) => sum + (item.totalMinimum ?? 0), 0)
+  const totalMaximum = pricedLines.reduce((sum, item) => sum + (item.totalMaximum ?? 0), 0)
+  const formatGhs = (amount: number) => `GHS ${amount.toLocaleString('en-GH')}`
+  const totalLine = pricedLines.length === 0
+    ? 'Priced items total: Total unavailable until prices are confirmed.'
+    : `Priced items total: ${totalMinimum === totalMaximum ? formatGhs(totalMinimum) : `${formatGhs(totalMinimum)}–${formatGhs(totalMaximum)}`}`
+  const comingSoonCount = details.items.reduce((count, item) => count + (item.unitPriceLabel === 'Coming Soon' ? item.quantity : 0), 0)
+  const capacityCount = details.items.reduce((count, item) => count + (item.unitPriceLabel === 'Select capacity to see price' ? item.quantity : 0), 0)
   const noteLine = details.note?.trim() ? `\nAdditional note: ${details.note.trim()}` : ''
   const message = [
     'ORDER REQUEST / ENQUIRY (not a confirmed order)',
@@ -34,7 +50,10 @@ export function createOrderRequestWhatsAppUrl(details: OrderRequestDetails) {
     'I would like to enquire about these products:',
     productLines,
     '',
-    'Pricing is not yet confirmed by Omni. Please confirm pricing and availability. This enquiry does not confirm an order.',
+    totalLine,
+    `Coming Soon items are excluded from the priced-items total${comingSoonCount > 0 ? ` (${comingSoonCount} item${comingSoonCount === 1 ? '' : 's'})` : ''}.`,
+    ...(capacityCount > 0 ? [`Items without a selected capacity are excluded from the priced-items total (${capacityCount} item${capacityCount === 1 ? '' : 's'}).`] : []),
+    'Amounts are based on the client-provided catalogue and should be confirmed by Omni. Availability is unconfirmed. This enquiry does not confirm an order or payment.',
     '',
     `Customer name: ${details.customerName.trim()}`,
     `Phone number: ${details.phoneNumber.trim()}`,

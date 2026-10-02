@@ -3,7 +3,7 @@ import { ProductImage } from '../components/ProductImage'
 import { createProductAvailabilityWhatsAppUrl } from '../config/whatsapp'
 import { catalogueProducts } from '../data/catalogue'
 import { AddToCartButton } from '../components/AddToCartButton'
-import { PinterestPinEmbed } from '../components/PinterestPinEmbed'
+import { ProductPrice } from '../components/ProductPrice'
 
 export function ProductDetailPage() {
   const { productId } = useParams()
@@ -21,33 +21,16 @@ export function ProductDetailPage() {
   }
 
   const whatsAppUrl = createProductAvailabilityWhatsAppUrl(product.name)
-  const hasLocalPinterestImage = product.image.status === 'pinterest-local-reference'
 
   return (
     <main id="main-content" className="page-main content-main product-detail-main">
       <Link className="back-to-shop" to="/shop">← Back to Shop</Link>
       <article className="product-detail-layout" aria-labelledby="product-detail-title">
-        {hasLocalPinterestImage && product.pinterestReference ? (
-          <div className="product-detail-media">
-            <ProductImage
-              image={product.image}
-              productName={product.name}
-              className="product-detail-image"
-            />
-            <details className="product-detail-pin-reference">
-              <summary>View existing Pinterest reference</summary>
-              <PinterestPinEmbed pinUrl={product.pinterestReference.pinUrl} productName={product.name} />
-            </details>
-          </div>
-        ) : product.pinterestReference ? (
-          <PinterestPinEmbed pinUrl={product.pinterestReference.pinUrl} productName={product.name} />
-        ) : (
-          <ProductImage
-            image={product.image}
-            productName={product.name}
-            className="product-detail-image"
-          />
-        )}
+        <ProductImage
+          image={product.image}
+          productName={product.name}
+          className="product-detail-image"
+        />
         <div className="product-detail-content">
           <p className="eyebrow">{product.categoryName}</p>
           <h1 id="product-detail-title">{product.name}</h1>
@@ -81,7 +64,7 @@ export function ProductDetailPage() {
           {product.publicationNote && <p className="publication-note detail-publication-note">{product.publicationNote}</p>}
 
           <dl className="detail-statuses">
-            <div><dt>Price</dt><dd>Price on Request</dd></div>
+            <div><dt>Price</dt><dd><ProductPrice price={product.price} /></dd></div>
             <div><dt>Availability</dt><dd>Unconfirmed</dd></div>
           </dl>
 
