@@ -20,7 +20,7 @@ export type CatalogueProduct = {
   includedItems?: string[]
   image: CatalogueImage
   price: CataloguePrice
-  availabilityStatus: 'unconfirmed'
+  availabilityStatus: 'Available'
   publicationNote?: string
   pinterestReference?: { searchQuery: string; pinUrl: string; accessedAt: string }
   searchKeywords: string[]
@@ -122,7 +122,7 @@ const product = (
   id, name, categoryId, categoryName, description, searchKeywords,
   image: developmentImage,
   price: productPrices[id],
-  availabilityStatus: 'unconfirmed',
+  availabilityStatus: 'Available',
   ...extra,
 })
 

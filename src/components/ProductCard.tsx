@@ -36,7 +36,7 @@ export function ProductCard({ product }: ProductCardProps) {
         {product.publicationNote && <p className="publication-note">{product.publicationNote}</p>}
         <div className="product-statuses" aria-label="Price and availability">
           <p><strong>Price:</strong> <ProductPrice price={product.price} /></p>
-          <p><strong>Availability:</strong> Unconfirmed</p>
+          <p><strong>Availability:</strong> {product.availabilityStatus}</p>
         </div>
         <Link className="button button-secondary product-details-link" to={`/products/${product.id}`}>
           View Details<span className="visually-hidden">: {product.name}</span>

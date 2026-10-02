@@ -65,7 +65,7 @@ export function ProductDetailPage() {
 
           <dl className="detail-statuses">
             <div><dt>Price</dt><dd><ProductPrice price={product.price} /></dd></div>
-            <div><dt>Availability</dt><dd>Unconfirmed</dd></div>
+            <div><dt>Availability</dt><dd>{product.availabilityStatus}</dd></div>
           </dl>
 
           <a className="button button-primary product-whatsapp-link" href={whatsAppUrl} target="_blank" rel="noreferrer">

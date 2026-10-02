@@ -31,9 +31,6 @@ export function ProductImage({ image, productName, className = '' }: ProductImag
     return (
       <figure className={`product-visual ${className}`}>
         <img className="product-image-asset" src={image.src} alt={image.alt} loading="lazy" />
-        <figcaption className="representative-image-note">
-          Reference image — supplied product match and reuse rights are unverified.
-        </figcaption>
       </figure>
     )
   }
