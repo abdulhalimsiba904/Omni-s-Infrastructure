@@ -96,7 +96,7 @@ export function ShopPage() {
             <>
               <p>We couldn’t find “{query}” in our online catalogue. Can’t find what you’re looking for?</p>
               <a className="button button-primary" href={missingProductUrl} target="_blank" rel="noreferrer">
-                Ask Omni on WhatsApp
+                Ask Waki on WhatsApp
               </a>
             </>
           ) : (

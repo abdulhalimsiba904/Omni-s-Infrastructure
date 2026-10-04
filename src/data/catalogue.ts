@@ -40,6 +40,16 @@ export type CatalogueImage =
       alt: string
     }
   | {
+      status: 'unverified-local-reference'
+      src: string
+      alt: string
+      caption: string
+    }
+  | {
+      status: 'image-set'
+      images: { src: string; alt: string }[]
+    }
+  | {
       status: 'temporary-pinterest-reference'
       src: string
       alt: string
@@ -62,6 +72,7 @@ export type CatalogueImage =
     }
 
 export const catalogueCategories: CatalogueCategory[] = [
+  { id: 'special-offer', name: 'Special Offer' },
   { id: 'mining-workshop', name: 'Mining, Gold Processing & Workshop Tools' },
   { id: 'solar-energy', name: 'Solar Energy Equipment & Gadgets' },
   { id: 'scales-measuring', name: 'Scales, Measuring & Business Equipment' },
@@ -75,6 +86,8 @@ export const catalogueCategories: CatalogueCategory[] = [
 
 const developmentImage = { status: 'development-placeholder' as const, label: 'Development image placeholder' }
 const productPrices: Record<string, CataloguePrice> = {
+  'special-offer-bundle': { status: 'fixed', amount: 10999 },
+  'durable-water-resistant-full-body-fishing-suit': { status: 'fixed', amount: 500 },
   'small-high-temperature-melting-furnace': { status: 'variants', options: [
     { id: '1kg', label: '1 kg', amount: 6800 },
     { id: '2kg', label: '2 kg', amount: 7500 },
@@ -117,7 +130,7 @@ const product = (
   categoryName: string,
   description: string,
   searchKeywords: string[],
-  extra: Partial<Pick<CatalogueProduct, 'brand' | 'specifications' | 'includedItems' | 'publicationNote' | 'image' | 'pinterestReference'>> = {},
+  extra: Partial<Pick<CatalogueProduct, 'brand' | 'specifications' | 'includedItems' | 'publicationNote' | 'image' | 'pinterestReference' | 'price'>> = {},
 ): CatalogueProduct => ({
   id, name, categoryId, categoryName, description, searchKeywords,
   image: developmentImage,
@@ -137,7 +150,7 @@ export const catalogueProducts: CatalogueProduct[] = [
   product('gold-melting-torch-kit', 'Gold Melting Torch / Gas Torch Kit', 'mining-workshop', 'Mining, Gold Processing & Workshop Tools', 'Intended for gold and related metal melting applications.', ['torch', 'gas torch', 'gold', 'metal melting'], {image: { status: 'pinterest-local-reference', src: "/images/products/client-pinterest-reference/gold-melting-torch-kit-pinterest-reference.jpg", alt: "Pinterest reference showing a handheld gas torch; its intended use and supplied kit contents are not verified." },  pinterestReference: pinterestReference('Gold Melting Torch Gas Torch Kit', '4604508530264254528') }),
   product('melting-tongs-crucible-pliers', 'Melting Tongs / Crucible Pliers', 'mining-workshop', 'Mining, Gold Processing & Workshop Tools', 'For handling gold, silver, and jewelry crucibles.', ['tongs', 'pliers', 'crucible', 'gold', 'silver', 'jewelry'], { image: { status: 'pinterest-local-reference', src: "/images/products/client-pinterest-reference/melting-tongs-crucible-pliers-pinterest-reference.jpg", alt: "Pinterest reference showing long crucible-style tongs; supplied size and model are not verified." } }),
   product('forged-iron-blacksmith-tongs', 'Forged Iron Blacksmith Tongs', 'mining-workshop', 'Mining, Gold Processing & Workshop Tools', 'Heavy-duty forged iron tongs for workshop and blacksmith applications.', ['forged iron', 'blacksmith', 'tongs', 'workshop'], {image: { status: 'pinterest-local-reference', src: "/images/products/client-pinterest-reference/forged-iron-blacksmith-tongs-pinterest-reference.jpg", alt: "Pinterest reference showing blacksmith tongs; supplied form and size are not verified." },  pinterestReference: pinterestReference('Forged Iron Blacksmith Tongs', '1548181166236217') }),
-  product('graphite-carbon-crucibles-molds', 'Graphite / Carbon Crucibles & Molds', 'mining-workshop', 'Mining, Gold Processing & Workshop Tools', 'For metal melting and casting applications.', ['graphite', 'carbon', 'crucibles', 'molds', 'casting'], { image: { status: 'pinterest-local-reference', src: "/images/products/client-pinterest-reference/graphite-carbon-crucibles-molds-pinterest-reference.jpg", alt: "Pinterest reference showing metal pouring and bar molds; it does not verify Omni crucibles or mold specifications." } }),
+  product('graphite-carbon-crucibles-molds', 'Graphite / Carbon Crucibles & Molds', 'mining-workshop', 'Mining, Gold Processing & Workshop Tools', 'For metal melting and casting applications.', ['graphite', 'carbon', 'crucibles', 'molds', 'casting'], { image: { status: 'pinterest-local-reference', src: "/images/products/client-pinterest-reference/graphite-carbon-crucibles-molds-pinterest-reference.jpg", alt: "Pinterest reference showing metal pouring and bar molds; it does not verify the supplied crucibles or mold specifications." } }),
   product('borax-powder', 'Borax Powder', 'mining-workshop', 'Mining, Gold Processing & Workshop Tools', 'Flux for gold and silver smelting and welding applications.', ['borax', 'powder', 'flux', 'smelting', 'welding'], {image: { status: 'pinterest-local-reference', src: "/images/products/client-pinterest-reference/borax-powder-pinterest-reference.jpg", alt: "Pinterest reference showing a borax flux package; supplied brand and package details are not verified." },  pinterestReference: pinterestReference('Borax Powder', '4590997713151930112') }),
   product('aluminum-alloy-igniter-torch', 'Full Aluminum Alloy Igniter / Torch', 'mining-workshop', 'Mining, Gold Processing & Workshop Tools', 'Portable aluminum-alloy ignition and torch equipment.', ['aluminum alloy', 'igniter', 'torch', 'portable'], { image: { status: 'pinterest-local-reference', src: '/images/products/client-pinterest-reference/aluminum-alloy-igniter-torch-pinterest-reference.jpg', alt: 'Pinterest reference showing a handheld torch attached to a gas canister; product application, fuel type and kit contents are not verified.' }, pinterestReference: pinterestReference('Full Aluminum Alloy Igniter Torch', '4591419908831470464') }),
   product('solar-power-system-kit', 'Solar Power System Kit', 'solar-energy', 'Solar Energy Equipment & Gadgets', 'A solar power system kit.', ['solar', 'power system', 'kit'], {image: { status: 'pinterest-local-reference', src: "/images/products/client-pinterest-reference/solar-power-system-kit-pinterest-reference.jpg", alt: "Pinterest reference showing a residential solar installation; supplied brand, configuration and included components are not verified." },  includedItems: ['Solar panels', 'Inverter', 'Power battery station'], pinterestReference: pinterestReference('Solar Power System Kit solar panels inverter battery station', '704109723042339712') }),
@@ -156,11 +169,45 @@ export const catalogueProducts: CatalogueProduct[] = [
   product('standard-one-piece-flush-toilet', 'Standard One-Piece Flush Toilet', 'sanitary-ware', 'Sanitary Ware & Bathroom Equipment', 'Standard one-piece toilet.', ['standard toilet', 'one-piece', 'flush toilet'], {image: { status: 'pinterest-local-reference', src: "/images/products/client-pinterest-reference/standard-one-piece-flush-toilet-pinterest-reference.jpg", alt: "Pinterest reference showing a one-piece toilet; supplied brand and features are not verified." },  pinterestReference: pinterestReference('Standard One-Piece Flush Toilet', '4590575529069271936') }),
   product('bathroom-shower-faucet-system', 'Bathroom Shower Faucet System', 'sanitary-ware', 'Sanitary Ware & Bathroom Equipment', 'Wall-mounted rainfall shower head and hand-sprayer set.', ['bathroom', 'shower', 'faucet', 'rainfall', 'hand sprayer'], {image: { status: 'pinterest-local-reference', src: "/images/products/client-pinterest-reference/bathroom-shower-faucet-system-pinterest-reference.jpg", alt: "Pinterest reference showing a bathroom shower area; supplied system arrangement and finish are not verified." },  pinterestReference: pinterestReference('Bathroom Shower Faucet System rainfall hand sprayer', '4596627221998528896') }),
   product('foldable-compact-sofa-beds', 'Foldable Compact Sofa Beds & Sofas', 'furniture-comfort', 'Furniture & Home Comfort', 'Examples listed: vacuum-sealed compressed sofas, inflatable lazy sofas, and pumpkin-shaped chairs.', ['foldable', 'compact', 'sofa bed', 'sofa', 'inflatable', 'chair'], { image: { status: 'pinterest-local-reference', src: "/images/products/client-pinterest-reference/foldable-compact-sofa-beds-pinterest-reference.jpg", alt: "Pinterest reference showing a sofa bed in two configurations; supplied model and catalogue variants are not verified." } }),
-  product('mattresses', 'Mattresses', 'furniture-comfort', 'Furniture & Home Comfort', 'Examples listed: individually wrapped spring mattresses, hotel memory foam mattresses, and compressed rolled mattresses.', ['mattress', 'spring', 'memory foam', 'compressed rolled'], { image: { status: 'pinterest-local-reference', src: "/images/products/client-pinterest-reference/mattresses-pinterest-reference.jpg", alt: "Pinterest reference showing a spring mattress; Omni’s listed mattress variants may differ." }, pinterestReference: pinterestReference('Mattresses spring memory foam compressed rolled', '231583605835401660') }),
+  product('mattresses', 'Mattresses', 'furniture-comfort', 'Furniture & Home Comfort', 'Examples listed: individually wrapped spring mattresses, hotel memory foam mattresses, and compressed rolled mattresses.', ['mattress', 'spring', 'memory foam', 'compressed rolled'], { image: { status: 'pinterest-local-reference', src: "/images/products/client-pinterest-reference/mattresses-pinterest-reference.jpg", alt: "Pinterest reference showing a spring mattress; Waki’s listed mattress variants may differ." }, pinterestReference: pinterestReference('Mattresses spring memory foam compressed rolled', '231583605835401660') }),
   product('aurorafox-camping-tents', 'Inflatable & Setup Outdoor Camping Tents', 'outdoor-camping', 'Outdoor & Camping Equipment', 'Family camping tents.', ['inflatable', 'setup', 'outdoor', 'camping', 'tent', 'family'], {image: { status: 'pinterest-local-reference', src: "/images/products/client-pinterest-reference/aurorafox-camping-tents-pinterest-reference.jpg", alt: "Pinterest reference showing a dome-style camping tent; supplied brand and setup type are not verified." },  brand: 'AURORAFOX', pinterestReference: pinterestReference('Inflatable Setup Outdoor Camping Tents AURORAFOX', '985231165688219') }),
   product('outdoor-camping-shower-kit', 'Outdoor Camping Shower Kit', 'outdoor-camping', 'Outdoor & Camping Equipment', 'Outdoor camping shower kit.', ['outdoor', 'camping', 'shower kit'], {image: { status: 'pinterest-local-reference', src: "/images/products/client-pinterest-reference/outdoor-camping-shower-kit-pinterest-reference.jpg", alt: "Pinterest reference showing a portable camping shower with a bucket and pump; supplied power source and kit contents are not verified." },  includedItems: ['Self-priming pump', 'Bucket', 'Shower head'], pinterestReference: pinterestReference('Outdoor Camping Shower Kit self-priming pump bucket', '6051780744779906') }),
   product('portable-pressure-washer', 'Portable Pressure Washer / High-Pressure Car Washer', 'industrial-utility', 'Industrial & Utility Equipment', 'Suitable for vehicle and general cleaning applications.', ['portable', 'pressure washer', 'car washer', 'vehicle', 'cleaning'], {image: { status: 'pinterest-local-reference', src: "/images/products/client-pinterest-reference/portable-pressure-washer-pinterest-reference.jpg", alt: "Pinterest reference showing a pressure washer in use; supplied brand, model and pressure are not verified." },  pinterestReference: pinterestReference('Portable Pressure Washer High-Pressure Car Washer', '892557219921682153') }),
   product('portable-refrigeration-ac-welding-torch-kit', 'Portable Refrigeration & AC Welding Torch Kit', 'industrial-utility', 'Industrial & Utility Equipment', 'Portable refrigeration and AC welding torch kit.', ['portable', 'refrigeration', 'AC', 'welding torch'], {image: { status: 'pinterest-local-reference', src: "/images/products/client-pinterest-reference/portable-refrigeration-ac-welding-torch-kit-pinterest-reference.jpg", alt: "Pinterest reference showing a portable welding torch set; supplied use and kit components are not verified." },  specifications: [{ label: 'Capacity', value: '2L' }], includedItems: ['Carrying case'] }),
   product('medical-oxygen-tank-gas-cylinder-kit', 'Medical Oxygen Tank / Gas Cylinder Kit', 'safety-medical', 'Safety & Medical Equipment', 'Medical oxygen tank / gas cylinder kit.', ['medical oxygen', 'tank', 'gas cylinder', 'kit'], {image: { status: 'pinterest-local-reference', src: "/images/products/client-pinterest-reference/medical-oxygen-tank-gas-cylinder-kit-pinterest-reference.jpg", alt: "Pinterest reference showing a gas cylinder with attached equipment; specifications, components and intended use are not verified." },  publicationNote: 'Product specifications and intended use must be confirmed with the client before publication.', pinterestReference: pinterestReference('Medical Oxygen Tank Gas Cylinder Kit', '28429041394390865') }),
   product('disposable-protective-hazmat-suit', 'Disposable Protective / Hazmat Suit', 'safety-medical', 'Safety & Medical Equipment', 'Full protective suit with hood.', ['disposable', 'protective suit', 'hazmat', 'hood'], {image: { status: 'pinterest-local-reference', src: "/images/products/client-pinterest-reference/disposable-protective-hazmat-suit-pinterest-reference.jpg", alt: "Pinterest reference showing a protective coverall with other protective equipment; supplied components and protection claims are not verified." },  pinterestReference: pinterestReference('Disposable Protective Hazmat Suit hood', '36310340742091370') }),
+  product('special-offer-bundle', 'Special Offer', 'special-offer', 'Special Offer', 'A single packaged offer represented by seven image references supplied from the Downloads folder. Exact supplied models, package configuration, original image sources, and image reuse rights have not been confirmed.', ['special offer', 'bundle', 'package', 'melting furnace', 'graphite mould', 'respirator', 'digital scale', 'flashlight'], {
+    image: {
+      status: 'image-set',
+      images: [
+        { src: '/images/products/special-offer/electric-melting-furnace-reference.jpg', alt: 'Electric melting furnace image reference; exact supplied product and kit configuration are unconfirmed.' },
+        { src: '/images/products/special-offer/respirator-mask-reference.jpg', alt: 'Respirator mask image reference; exact supplied product and configuration are unconfirmed.' },
+        { src: '/images/products/special-offer/graphite-mould-reference-a.jpg', alt: 'Graphite mould image reference; exact supplied product is unconfirmed.' },
+        { src: '/images/products/special-offer/graphite-ingot-mould-reference-b.jpg', alt: 'Graphite ingot mould image reference; exact supplied product is unconfirmed.' },
+        { src: '/images/products/special-offer/graphite-casting-mould-reference-c.jpg', alt: 'Graphite casting mould image reference; exact supplied product is unconfirmed.' },
+        { src: '/images/products/special-offer/digital-scale-reference.jpg', alt: 'Digital scale image reference; exact supplied product and specifications are unconfirmed.' },
+        { src: '/images/products/special-offer/flashlight-reference.jpg', alt: 'Flashlight image reference; exact supplied product and specifications are unconfirmed.' },
+      ],
+    },
+    price: productPrices['special-offer-bundle'],
+    includedItems: [
+      'Electric melting furnace image reference',
+      'Respirator mask image reference',
+      'Unnamed included item (graphite-block image reference)',
+      'Graphite ingot mould image reference B',
+      'Graphite casting mould image reference C',
+      'Digital scale image reference',
+      'Flashlight image reference',
+    ],
+    publicationNote: 'Image references do not confirm the exact supplied items, package configuration, source, or reuse rights.',
+  }),
+  product('durable-water-resistant-full-body-fishing-suit', 'durable water-resistant Full-Body Fishing Suit', 'outdoor-camping', 'Outdoor & Camping Equipment', 'Durable water-resistant full-body fishing suit.', ['durable', 'water-resistant', 'full-body', 'fishing suit', 'fishing apparel'], {
+    image: {
+      status: 'unverified-local-reference',
+      src: '/images/products/fishing-suit-reference.jpg',
+      alt: 'Image reference for a full-body fishing suit; exact supplied item and details are unconfirmed.',
+      caption: 'Reference image — source, product match, and reuse rights are unverified.',
+    },
+    price: productPrices['durable-water-resistant-full-body-fishing-suit'],
+  }),
 ]

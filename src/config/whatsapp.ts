@@ -1,17 +1,17 @@
 export const omniWhatsAppNumber = '233536437017'
 
 export function createGeneralWhatsAppUrl() {
-  const message = 'Hello Omni Industrial and Building Supplies, I have a general enquiry.'
+  const message = 'Hello Waki Industrial and General Supplies, I have a general enquiry.'
   return `https://wa.me/${omniWhatsAppNumber}?text=${encodeURIComponent(message)}`
 }
 
 export function createMissingProductWhatsAppUrl(query: string) {
-  const message = `Hello Omni Industrial and Building Supplies, I'm looking for "${query}", but I couldn't find it on your website. Do you have it available?`
+  const message = `Hello Waki Industrial and General Supplies, I'm looking for "${query}", but I couldn't find it on your website. Do you have it available?`
   return `https://wa.me/${omniWhatsAppNumber}?text=${encodeURIComponent(message)}`
 }
 
 export function createProductAvailabilityWhatsAppUrl(productName: string) {
-  const message = `Hello Omni Industrial and Building Supplies, is the "${productName}" available?`
+  const message = `Hello Waki Industrial and General Supplies, is the "${productName}" available?`
   return `https://wa.me/${omniWhatsAppNumber}?text=${encodeURIComponent(message)}`
 }
 
@@ -46,14 +46,14 @@ export function createOrderRequestWhatsAppUrl(details: OrderRequestDetails) {
   const noteLine = details.note?.trim() ? `\nAdditional note: ${details.note.trim()}` : ''
   const message = [
     'ORDER REQUEST / ENQUIRY (not a confirmed order)',
-    'Hello Omni Industrial and Building Supplies,',
+    'Hello Waki Industrial and General Supplies,',
     'I would like to enquire about these products:',
     productLines,
     '',
     totalLine,
     `Coming Soon items are excluded from the priced-items total${comingSoonCount > 0 ? ` (${comingSoonCount} item${comingSoonCount === 1 ? '' : 's'})` : ''}.`,
     ...(capacityCount > 0 ? [`Items without a selected capacity are excluded from the priced-items total (${capacityCount} item${capacityCount === 1 ? '' : 's'}).`] : []),
-    'Amounts are based on the client-provided catalogue and should be confirmed by Omni. Availability is unconfirmed. This enquiry does not confirm an order or payment.',
+    'Amounts are based on the client-provided catalogue and should be confirmed by Waki. Availability is unconfirmed. This enquiry does not confirm an order or payment.',
     '',
     `Customer name: ${details.customerName.trim()}`,
     `Phone number: ${details.phoneNumber.trim()}`,

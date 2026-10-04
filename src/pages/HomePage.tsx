@@ -16,7 +16,7 @@ export function HomePage() {
     <main id="main-content" className="page-main home-page">
       <section className="hero home-main" aria-labelledby="home-title">
         <div className="hero-content">
-          <p className="eyebrow">Omni Industrial and Building Supplies</p>
+          <p className="eyebrow">Waki Industrial and General Supplies</p>
           <h1 id="home-title">Supplies for industry, building, and beyond.</h1>
           <p className="hero-copy">
             Explore products across industrial, building, mining, solar, sanitary, safety, utility, and related categories.
@@ -32,7 +32,7 @@ export function HomePage() {
         <header className="home-section-heading">
           <p className="eyebrow">Browse by category</p>
           <h2 id="category-showcase-title">Find products for your needs</h2>
-          <p>Explore the categories in the Omni catalogue.</p>
+          <p>Explore the categories in the Waki catalogue.</p>
         </header>
         <ul className="home-category-grid">
           {catalogueCategories.map((category) => (

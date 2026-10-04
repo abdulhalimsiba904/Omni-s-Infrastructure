@@ -62,7 +62,7 @@ export function CartPage() {
                 : `${formatGhs(totalMinimum)}–${formatGhs(totalMaximum)}`}</p>
             )}
             {excludedCount > 0 && <p>Coming Soon items and items without a selected capacity are excluded until priced.</p>}
-            <p>Pricing will be confirmed by Omni.</p>
+            <p>Pricing will be confirmed by Waki.</p>
           </section>
           <ul className="cart-items-list" aria-label="Cart items">
             {cartProducts.map(({ product, quantity, variantId, unitLabel, lineLabel }) => (

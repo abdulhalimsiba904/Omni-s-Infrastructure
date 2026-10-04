@@ -1,5 +1,22 @@
 # Product image sources
 
+## Special Offer bundle and fishing-suit references — 2026-10-04
+
+The following local files were copied from `C:\Users\USER\Downloads` on 2026-10-04. Original source pages, creators/publishers, license terms, and permission were not available in the downloaded-file records. Usage rights are unverified for every image. The Special Offer uses these seven images together as one offer; filenames and visible image subjects were used only to describe the image references, not to confirm exact supplied models or configuration. No Pinterest Pin URL, embed, or ownership/reuse claim is associated with these files.
+
+| Catalogue entry | Downloads filename | Local file | Image subject / note | Source and rights status |
+| --- | --- | --- | --- | --- |
+| `special-offer-bundle` | `HOZYZO 1800W Electric Melting Furnace Kit, Upgraded PID Digital Smelter _ 110V electric furnace_ PID digital control up to 2012°F. Includes 1KG & 3KG` | `public/images/products/special-offer/electric-melting-furnace-reference.jpg` | Furnace image; stated model, ratings and accessories are not adopted as offer specifications. | Original source URL and creator unavailable; reuse rights unverified. |
+| `special-offer-bundle` | `Reusable Respirator Half Facep Gas Mask Grey.jpg` | `public/images/products/special-offer/respirator-mask-reference.jpg` | Respirator-mask image reference. | Original source URL and creator unavailable; reuse rights unverified. |
+| `special-offer-bundle` | `TANJIN High Density Graphite Oil Tank,High Temperature Resistant Grinding & Molding Tool for DIY Jewelry Processing.jpg` | `public/images/products/special-offer/graphite-mould-reference-a.jpg` | Image visibly depicts graphite mould-like blocks; the filename says “Oil Tank,” so the component identity is ambiguous and is not given a specific item name. | Original source URL and creator unavailable; reuse rights unverified. |
+| `special-offer-bundle` | `Tooltos High Purity Graphite Ingot Mold Heat Resistant Gold Silver Casting Jewelry Making Tool.jpg` | `public/images/products/special-offer/graphite-ingot-mould-reference-b.jpg` | Graphite ingot mould image; brand, contents and specifications are not adopted as offer claims. | Original source and creator unavailable; reuse rights unverified. |
+| `special-offer-bundle` | `ad eBay _ $73_18 _ 14 in 1 Graphite Casting Ingot Mold for Metal Refining Scrap Gold Silver Copper _.jpg` | `public/images/products/special-offer/graphite-casting-mould-reference-c.jpg` | Graphite casting mould image; title's quantity and other item claims are not adopted. | Original source URL and creator unavailable; reuse rights unverified. |
+| `special-offer-bundle` | `AccuWeight Digital Kitchen Scale Stainless Steel Food Scale with LCD Display for Precise Weighing of.jpg` | `public/images/products/special-offer/digital-scale-reference.jpg` | Digital scale image; exact model and specifications are not adopted. | Original source URL and creator unavailable; reuse rights unverified. |
+| `special-offer-bundle` | `5 Best SureFire Flashlights - The Loadout Room.jpg` | `public/images/products/special-offer/flashlight-reference.jpg` | Flashlight image; brand and features are not adopted as offer claims. | Original source URL and creator unavailable; reuse rights unverified. |
+| `durable-water-resistant-full-body-fishing-suit` | `durable water-resistant Full-Body Fishing Suit.jpg` | `public/images/products/fishing-suit-reference.jpg` | Fishing-suit image used as a reference. | Original source URL and creator unavailable; reuse rights unverified. |
+
+The original files in Downloads were left in place. The offer and suit images must not be represented as source-verified or launch-approved assets.
+
 ## Current integration status — 2026-09-28
 
 Thirty mapped Pinterest-downloaded references are active as local product images with an unverified-reference caption. Rights for the downloaded images are unverified; do not treat them as client-owned or launch-approved. Detail pages with a catalogue Pin continue to show the existing Pin embed in place of a second image.

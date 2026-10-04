@@ -36,7 +36,7 @@ export function OrderRequestForm({ items }: OrderRequestFormProps) {
     <section className="order-request" aria-labelledby="order-request-heading">
       <h2 id="order-request-heading">Send Order via WhatsApp</h2>
       <p className="order-request-intro">
-        Send an order enquiry to Omni. This is a request only; pricing and availability are not confirmed here.
+        Send an order enquiry to Waki. This is a request only; pricing and availability are not confirmed here.
       </p>
       <form className="order-request-form" onSubmit={handleSubmit}>
         <div className="order-form-field">

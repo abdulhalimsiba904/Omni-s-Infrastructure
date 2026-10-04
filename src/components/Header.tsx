@@ -14,9 +14,9 @@ export function Header() {
   return (
     <header className="site-header">
       <div className="header-inner">
-        <NavLink className="brand" to="/" aria-label="Omni Industrial and Building Supplies home">
-          <span className="brand-mark" aria-hidden="true">O</span>
-          <span className="brand-name">Omni Industrial<br />and Building Supplies</span>
+        <NavLink className="brand" to="/" aria-label="Waki Industrial and General Supplies home">
+          <span className="brand-mark" aria-hidden="true">W</span>
+          <span className="brand-name">Waki Industrial<br />and General Supplies</span>
         </NavLink>
         <nav className="main-navigation" aria-label="Main navigation">
           {navigation.map(({ label, to }) => (
