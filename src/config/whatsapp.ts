@@ -1,4 +1,4 @@
-export const omniWhatsAppNumber = '233536437017'
+export const omniWhatsAppNumber = '233557379584'
 
 export function createGeneralWhatsAppUrl() {
   const message = 'Hello Waki Industrial and General Supplies, I have a general enquiry.'

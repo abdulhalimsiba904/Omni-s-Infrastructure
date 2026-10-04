@@ -176,30 +176,25 @@ export const catalogueProducts: CatalogueProduct[] = [
   product('portable-refrigeration-ac-welding-torch-kit', 'Portable Refrigeration & AC Welding Torch Kit', 'industrial-utility', 'Industrial & Utility Equipment', 'Portable refrigeration and AC welding torch kit.', ['portable', 'refrigeration', 'AC', 'welding torch'], {image: { status: 'pinterest-local-reference', src: "/images/products/client-pinterest-reference/portable-refrigeration-ac-welding-torch-kit-pinterest-reference.jpg", alt: "Pinterest reference showing a portable welding torch set; supplied use and kit components are not verified." },  specifications: [{ label: 'Capacity', value: '2L' }], includedItems: ['Carrying case'] }),
   product('medical-oxygen-tank-gas-cylinder-kit', 'Medical Oxygen Tank / Gas Cylinder Kit', 'safety-medical', 'Safety & Medical Equipment', 'Medical oxygen tank / gas cylinder kit.', ['medical oxygen', 'tank', 'gas cylinder', 'kit'], {image: { status: 'pinterest-local-reference', src: "/images/products/client-pinterest-reference/medical-oxygen-tank-gas-cylinder-kit-pinterest-reference.jpg", alt: "Pinterest reference showing a gas cylinder with attached equipment; specifications, components and intended use are not verified." },  publicationNote: 'Product specifications and intended use must be confirmed with the client before publication.', pinterestReference: pinterestReference('Medical Oxygen Tank Gas Cylinder Kit', '28429041394390865') }),
   product('disposable-protective-hazmat-suit', 'Disposable Protective / Hazmat Suit', 'safety-medical', 'Safety & Medical Equipment', 'Full protective suit with hood.', ['disposable', 'protective suit', 'hazmat', 'hood'], {image: { status: 'pinterest-local-reference', src: "/images/products/client-pinterest-reference/disposable-protective-hazmat-suit-pinterest-reference.jpg", alt: "Pinterest reference showing a protective coverall with other protective equipment; supplied components and protection claims are not verified." },  pinterestReference: pinterestReference('Disposable Protective Hazmat Suit hood', '36310340742091370') }),
-  product('special-offer-bundle', 'Special Offer', 'special-offer', 'Special Offer', 'A single packaged offer represented by seven image references supplied from the Downloads folder. Exact supplied models, package configuration, original image sources, and image reuse rights have not been confirmed.', ['special offer', 'bundle', 'package', 'melting furnace', 'graphite mould', 'respirator', 'digital scale', 'flashlight'], {
+  product('special-offer-bundle', 'Special Offer', 'special-offer', 'Special Offer', 'A single packaged offer represented by five image references supplied from the Downloads folder. Exact supplied models, package configuration, original image sources, and image reuse rights have not been confirmed.', ['special offer', 'bundle', 'package', 'melting furnace', 'graphite mould', 'respirator', 'digital scale', 'metal detector', 'coin detector', 'pointer'], {
     image: {
       status: 'image-set',
       images: [
         { src: '/images/products/special-offer/electric-melting-furnace-reference.jpg', alt: 'Electric melting furnace image reference; exact supplied product and kit configuration are unconfirmed.' },
         { src: '/images/products/special-offer/respirator-mask-reference.jpg', alt: 'Respirator mask image reference; exact supplied product and configuration are unconfirmed.' },
         { src: '/images/products/special-offer/graphite-mould-reference-a.jpg', alt: 'Graphite mould image reference; exact supplied product is unconfirmed.' },
-        { src: '/images/products/special-offer/graphite-ingot-mould-reference-b.jpg', alt: 'Graphite ingot mould image reference; exact supplied product is unconfirmed.' },
-        { src: '/images/products/special-offer/graphite-casting-mould-reference-c.jpg', alt: 'Graphite casting mould image reference; exact supplied product is unconfirmed.' },
         { src: '/images/products/special-offer/digital-scale-reference.jpg', alt: 'Digital scale image reference; exact supplied product and specifications are unconfirmed.' },
-        { src: '/images/products/special-offer/flashlight-reference.jpg', alt: 'Flashlight image reference; exact supplied product and specifications are unconfirmed.' },
+        { src: '/images/products/special-offer/metal-detector-reference.jpg', alt: 'Handheld metal detector image reference; exact supplied model and capabilities are unconfirmed.' },
       ],
     },
     price: productPrices['special-offer-bundle'],
     includedItems: [
       'Electric melting furnace image reference',
       'Respirator mask image reference',
-      'Unnamed included item (graphite-block image reference)',
-      'Graphite ingot mould image reference B',
-      'Graphite casting mould image reference C',
+      'TANJIN High Density Graphite Oil Tank,High Temperature Resistant Grinding & Molding Tool for DIY Jewelry Processing',
       'Digital scale image reference',
-      'Flashlight image reference',
+      'Professional Metal Coin Gold Detector pointer Waterproof Handheld Metal Detector image reference',
     ],
-    publicationNote: 'Image references do not confirm the exact supplied items, package configuration, source, or reuse rights.',
   }),
   product('durable-water-resistant-full-body-fishing-suit', 'durable water-resistant Full-Body Fishing Suit', 'outdoor-camping', 'Outdoor & Camping Equipment', 'Durable water-resistant full-body fishing suit.', ['durable', 'water-resistant', 'full-body', 'fishing suit', 'fishing apparel'], {
     image: {
