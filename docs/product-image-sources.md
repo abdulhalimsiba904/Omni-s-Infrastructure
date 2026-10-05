@@ -20,7 +20,7 @@ The original files in Downloads were left in place. The offer and suit images mu
 
 ## Current integration status — 2026-09-28
 
-Thirty mapped Pinterest-downloaded references are active as local product images with an unverified-reference caption. Rights for the downloaded images are unverified; do not treat them as client-owned or launch-approved. Detail pages with a catalogue Pin continue to show the existing Pin embed in place of a second image.
+Twenty-eight mapped Pinterest-downloaded references from the original catalogue remain active as local product images with an unverified-reference caption. Rights for the downloaded images are unverified; do not treat them as client-owned or launch-approved. On 2026-10-04, `gold-melting-torch-kit` and `aluminum-alloy-igniter-torch` were removed from the active catalogue and their local product-specific image files were retired; the Pin/source records below remain as historical internal records. Detail pages with a catalogue Pin continue to show the existing Pin embed in place of a second image.
 
 ## Historical Pinterest official Pin embed review — 2026-09-27
 
